@@ -4,6 +4,10 @@
 
 The bingusware client (minecraft 1.5.2 experience enhancer)
 
+## Setup
+- Run `decompile.sh` or `decompile.bat`
+- Copy the contents of `./bingusware_src/` into src and replace all files that have conflicts
+
 ## Building
 - Run `recompile.sh` or `recompile.bat`
 - Run `reobfuscate.sh` or `reobfuscate.bat`
@@ -20,7 +24,7 @@ The bingusware client (minecraft 1.5.2 experience enhancer)
 
 
 ## Contributing
-Pull requests are welcome!
+Pull requests are welcome! Please don't have original minecraft source files in your PR. Instead copy the files you've changed into `./bingusware_src/` (legal stuff 🙄)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
