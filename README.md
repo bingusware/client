@@ -19,9 +19,9 @@ The bingusware client (minecraft 1.5.2 experience enhancer)
 
 ## Patching
 - Download [mcpatcher 3.0.4](https://bitbucket.org/prupe/mcpatcher/downloads/mcpatcher-3.0.4_02.jar)
-- Uncheck all the mods
 - Select your original minecraft 1.5.2 jar
 - Select where the output will go
+- Uncheck all the mods
 - Hit the plus sign and add your *zip file*
 - Hit patch
 
