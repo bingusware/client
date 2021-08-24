@@ -4,6 +4,9 @@
 
 The bingusware client (minecraft 1.5.2 experience enhancer)
 
+![bingus](https://user-images.githubusercontent.com/77901819/130656268-294ca15e-ed71-4ca3-9131-23e250e4b866.gif)
+
+
 ## Setup
 - Run `decompile.sh` or `decompile.bat`
 - Copy the contents of `./bingusware_src/` into src and replace all files that have conflicts
