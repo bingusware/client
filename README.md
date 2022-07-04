@@ -8,13 +8,17 @@ The bingusware client (minecraft 1.5.2 experience enhancer)
 
 
 ## Setup
-- Run `decompile.sh` or `decompile.bat`
-- Copy the contents of `./bingusware_src/` into src and replace all files that have conflicts
+- Run the `decompile` script (either `decompile.sh` or `decompile.bat` depending on your operating system)
+- Copy the contents of `./bingusware_src/` into `/src` and replace all files that have conflicts
+
+## Testing
+- Run `recompile`
+- Run `startclient`
+- If you run into issues with `startclient` remove the arg `-Xincgc` from `CmdStartClt` in `/client/conf/mcp.cfg`
 
 ## Building
-- Run `recompile.sh` or `recompile.bat`
-- Run `reobfuscate.sh` or `reobfuscate.bat`
-- Go to `./reobf/minecraft` and put everything in a *zip file*
+- Run `recompile` and `reobfuscate`
+- Head into `/reobf/minecraft` and put zip everything in it into the root of a *zip* file
 - Now you can patch the jar
 
 ## Patching
@@ -22,7 +26,7 @@ The bingusware client (minecraft 1.5.2 experience enhancer)
 - Select your original minecraft 1.5.2 jar
 - Select where the output will go
 - Uncheck all the mods
-- Hit the plus sign and add your *zip file*
+- Hit the plus sign and add your *zip* file
 - Hit patch
 
 

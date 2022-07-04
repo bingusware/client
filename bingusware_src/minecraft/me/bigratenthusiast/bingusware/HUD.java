@@ -23,7 +23,8 @@ public class HUD {
         ScaledResolution sr = new ScaledResolution(minecraft.gameSettings, minecraft.displayWidth, minecraft.displayHeight);
 
         if (!hideFeatures) {
-            Utils.fontRenderer.drawString(Client.name, offset, offset, -1);
+            // Client watermark feels annoying
+            // Utils.fontRenderer.drawString(Client.name, offset, offset, -1);
             String[] enabledModules = Client.getEnabledModulesList();
 
 

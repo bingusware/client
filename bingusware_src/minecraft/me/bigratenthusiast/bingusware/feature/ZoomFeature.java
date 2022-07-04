@@ -11,12 +11,12 @@ public class ZoomFeature {
     public static float initialFov = mc.gameSettings.fovSetting;
     public static float initialMouseSensitivity = mc.gameSettings.mouseSensitivity;
     public static float zoomDepth = 5f;
-
     public static boolean prevState;
 
     public static boolean onEvent(Client.EventType type, Object... params) {
         if (type == Client.EventType.TICK) {
-            boolean keyPressed = Keyboard.isKeyDown(keyBindZoom.keyCode);
+            // Make sure we don't have a GUI or chat open
+            boolean keyPressed = Keyboard.isKeyDown(keyBindZoom.keyCode) && !mc.ingameGUI.getChatGUI().getChatOpen() && mc.currentScreen == null;
             if (keyPressed != prevState) {
                 if (keyPressed) {
                     initialFov = mc.gameSettings.fovSetting;

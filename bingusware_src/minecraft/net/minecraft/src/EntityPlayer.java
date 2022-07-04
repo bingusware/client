@@ -1630,30 +1630,27 @@ public abstract class EntityPlayer extends EntityLiving implements ICommandSende
      */
     public void moveEntityWithHeading(float par1, float par2)
     {
-        double var3 = this.posX;
-        double var5 = this.posY;
-        double var7 = this.posZ;
+        double startPosX = this.posX;
+        double startPosY = this.posY;
+        double startPosZ = this.posZ;
 
         if (this.capabilities.isFlying && this.ridingEntity == null)
         {
-            double var9 = this.motionY;
-            float var11 = this.jumpMovementFactor;
+            double tempMotionY = this.motionY;
+            float tempJumpMovement = this.jumpMovementFactor;
             this.jumpMovementFactor = this.capabilities.getFlySpeed();
             super.moveEntityWithHeading(par1, par2);
             /**
              * @edited 7/21/21
+             * @edited 7/4/22
              * @purpose make it easier to fly vertically
              */
-            // TODO: make the player go down when they sneak
-            this.motionY = var9 * (Client.isModuleEnabled("Flight") ? (isJumping ? 1 : 0) : 0.6D);
-            this.jumpMovementFactor = var11;
+            this.addVelocity(0, Client.isModuleEnabled("Flight") ? (isJumping ? 1D : (isSneaking() ? -0.8D : 0)) : 0, 0);
+            this.motionY = Client.isModuleEnabled("Flight")  ? 0 : (tempMotionY * 0.6D);
+            this.jumpMovementFactor = tempJumpMovement;
         }
-        else
-        {
-            super.moveEntityWithHeading(par1, par2);
-        }
-
-        this.addMovementStat(this.posX - var3, this.posY - var5, this.posZ - var7);
+        else super.moveEntityWithHeading(par1, par2);
+        this.addMovementStat(this.posX - startPosX, this.posY - startPosY, this.posZ - startPosZ);
     }
 
     /**
