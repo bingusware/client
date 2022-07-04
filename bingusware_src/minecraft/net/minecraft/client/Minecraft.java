@@ -1344,9 +1344,6 @@ public abstract class Minecraft implements Runnable, IPlayerUsage
         }
     }
 
-    /**
-     * Toggles fullscreen mode.
-     */
     public void toggleFullscreen()
     {
         try
@@ -1399,12 +1396,14 @@ public abstract class Minecraft implements Runnable, IPlayerUsage
             }
 
             Display.setFullscreen(this.fullscreen);
+
             Display.setVSyncEnabled(this.gameSettings.enableVsync);
             Display.update();
+
         }
-        catch (Exception var2)
+        catch (Exception exception)
         {
-            var2.printStackTrace();
+            exception.printStackTrace();
         }
     }
 

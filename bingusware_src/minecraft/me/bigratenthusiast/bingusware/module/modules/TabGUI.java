@@ -8,11 +8,13 @@ import org.lwjgl.input.Keyboard;
 
 public class TabGUI extends Module {
     public TabGUI() {
-        super("TabGUI", Keyboard.KEY_Y, Type.RENDER);
+        super("TabGUI", Keyboard.KEY_NONE, Type.RENDER);
     }
 
     public int currentTab, currentModule;
     public boolean expanded;
+
+    // TODO: this (lol!!!)
 
     @Override
     public boolean onEvent(Client.EventType type, Object... params) {

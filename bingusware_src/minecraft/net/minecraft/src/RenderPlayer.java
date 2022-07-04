@@ -1,24 +1,30 @@
 package net.minecraft.src;
 
+import me.bigratenthusiast.bingusware.Cosmetics;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * @edited 7/2/22
+ * @purpose 1.8 parity
+ */
 public class RenderPlayer extends RenderLiving
 {
-    private ModelBiped modelBipedMain;
+    private ModelPlayer modelPlayer;
     private ModelBiped modelArmorChestplate;
     private ModelBiped modelArmor;
     private static final String[] armorFilenamePrefix = new String[] {"cloth", "chain", "iron", "diamond", "gold"};
 
     public RenderPlayer()
     {
-        super(new ModelBiped(0.0F), 0.5F);
-        this.modelBipedMain = (ModelBiped)this.mainModel;
+        super(new ModelPlayer(0.0F), 0.5F);
+        this.modelPlayer = (ModelPlayer)this.mainModel;
         this.modelArmorChestplate = new ModelBiped(1.0F);
         this.modelArmor = new ModelBiped(0.5F);
     }
 
-    protected void func_98191_a(EntityPlayer par1EntityPlayer)
+    protected void loadTexture(EntityPlayer par1EntityPlayer)
     {
+        modelPlayer.setSmallArms(par1EntityPlayer.username);
         this.loadDownloadableImageTexture(par1EntityPlayer.skinUrl, par1EntityPlayer.getTexture());
     }
 
@@ -112,39 +118,39 @@ public class RenderPlayer extends RenderLiving
         }
     }
 
-    public void renderPlayer(EntityPlayer par1EntityPlayer, double par2, double par4, double par6, float par8, float par9)
+    public void renderPlayer(EntityPlayer entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         float var10 = 1.0F;
         GL11.glColor3f(var10, var10, var10);
-        ItemStack var11 = par1EntityPlayer.inventory.getCurrentItem();
-        this.modelArmorChestplate.heldItemRight = this.modelArmor.heldItemRight = this.modelBipedMain.heldItemRight = var11 != null ? 1 : 0;
+        ItemStack heldItem = entity.inventory.getCurrentItem();
+        this.modelArmorChestplate.heldItemRight = this.modelArmor.heldItemRight = this.modelPlayer.heldItemRight = heldItem != null ? 1 : 0;
 
-        if (var11 != null && par1EntityPlayer.getItemInUseCount() > 0)
+        if (heldItem != null && entity.getItemInUseCount() > 0)
         {
-            EnumAction var12 = var11.getItemUseAction();
+            EnumAction var12 = heldItem.getItemUseAction();
 
             if (var12 == EnumAction.block)
             {
-                this.modelArmorChestplate.heldItemRight = this.modelArmor.heldItemRight = this.modelBipedMain.heldItemRight = 3;
+                this.modelArmorChestplate.heldItemRight = this.modelArmor.heldItemRight = this.modelPlayer.heldItemRight = 3;
             }
             else if (var12 == EnumAction.bow)
             {
-                this.modelArmorChestplate.aimedBow = this.modelArmor.aimedBow = this.modelBipedMain.aimedBow = true;
+                this.modelArmorChestplate.aimedBow = this.modelArmor.aimedBow = this.modelPlayer.aimedBow = true;
             }
         }
 
-        this.modelArmorChestplate.isSneak = this.modelArmor.isSneak = this.modelBipedMain.isSneak = par1EntityPlayer.isSneaking();
-        double var14 = par4 - (double)par1EntityPlayer.yOffset;
+        this.modelArmorChestplate.isSneak = this.modelArmor.isSneak = this.modelPlayer.isSneak = entity.isSneaking();
+        double d0 = y - (double)entity.yOffset;
 
-        if (par1EntityPlayer.isSneaking() && !(par1EntityPlayer instanceof EntityPlayerSP))
+        if (entity.isSneaking() && !(entity instanceof EntityPlayerSP))
         {
-            var14 -= 0.125D;
+            d0 -= 0.125D;
         }
 
-        super.doRenderLiving(par1EntityPlayer, par2, var14, par6, par8, par9);
-        this.modelArmorChestplate.aimedBow = this.modelArmor.aimedBow = this.modelBipedMain.aimedBow = false;
-        this.modelArmorChestplate.isSneak = this.modelArmor.isSneak = this.modelBipedMain.isSneak = false;
-        this.modelArmorChestplate.heldItemRight = this.modelArmor.heldItemRight = this.modelBipedMain.heldItemRight = 0;
+        super.doRenderLiving(entity, x, d0, z, entityYaw, partialTicks);
+        this.modelArmorChestplate.aimedBow = this.modelArmor.aimedBow = this.modelPlayer.aimedBow = false;
+        this.modelArmorChestplate.isSneak = this.modelArmor.isSneak = this.modelPlayer.isSneak = false;
+        this.modelArmorChestplate.heldItemRight = this.modelArmor.heldItemRight = this.modelPlayer.heldItemRight = 0;
     }
 
     /**
@@ -161,7 +167,7 @@ public class RenderPlayer extends RenderLiving
         if (var4 != null)
         {
             GL11.glPushMatrix();
-            this.modelBipedMain.bipedHead.postRender(0.0625F);
+            this.modelPlayer.bipedHead.postRender(0.0625F);
             float var5;
 
             if (var4.getItem().itemID < 256)
@@ -211,7 +217,7 @@ public class RenderPlayer extends RenderLiving
                 GL11.glRotatef(-var25, 0.0F, 1.0F, 0.0F);
                 var8 = 1.3333334F;
                 GL11.glScalef(var8, var8, var8);
-                this.modelBipedMain.renderEars(0.0625F);
+                this.modelPlayer.renderEars(0.0625F);
                 GL11.glPopMatrix();
             }
         }
@@ -260,7 +266,7 @@ public class RenderPlayer extends RenderLiving
             GL11.glRotatef(var18 / 2.0F, 0.0F, 0.0F, 1.0F);
             GL11.glRotatef(-var18 / 2.0F, 0.0F, 1.0F, 0.0F);
             GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
-            this.modelBipedMain.renderCloak(0.0625F);
+            this.modelPlayer.renderCloak(0.0625F);
             GL11.glPopMatrix();
         }
 
@@ -269,7 +275,7 @@ public class RenderPlayer extends RenderLiving
         if (var21 != null)
         {
             GL11.glPushMatrix();
-            this.modelBipedMain.bipedRightArm.postRender(0.0625F);
+            this.modelPlayer.bipedRightArm.postRender(0.0625F);
             GL11.glTranslatef(-0.0625F, 0.4375F, 0.0625F);
 
             if (par1EntityPlayer.fishEntity != null)
@@ -391,7 +397,7 @@ public class RenderPlayer extends RenderLiving
                     this.renderLivingLabel(par1EntityPlayer, var14.func_96652_c() + " " + var13.getDisplayName(), par2, par4, par6, 64);
                 }
 
-                par4 += (double)((float)this.getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * par9);
+                par4 += ((float)this.getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * par9);
             }
         }
 
@@ -402,9 +408,10 @@ public class RenderPlayer extends RenderLiving
     {
         float var2 = 1.0F;
         GL11.glColor3f(var2, var2, var2);
-        this.modelBipedMain.onGround = 0.0F;
-        this.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, par1EntityPlayer);
-        this.modelBipedMain.bipedRightArm.render(0.0625F);
+        this.modelPlayer.onGround = 0.0F;
+        this.modelPlayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, par1EntityPlayer);
+        this.modelPlayer.bipedRightArm.render(0.0625F);
+//        this.modelPlayer.bipedRightArmwear.render(0.0625F);
     }
 
     /**
@@ -484,14 +491,14 @@ public class RenderPlayer extends RenderLiving
         this.renderPlayerSleep((EntityPlayer)par1EntityLiving, par2, par4, par6);
     }
 
-    protected void func_98190_a(EntityLiving par1EntityLiving)
+    protected void callLoadTextureFunction(EntityLiving entity)
     {
-        this.func_98191_a((EntityPlayer)par1EntityLiving);
+        this.loadTexture((EntityPlayer)entity);
     }
 
-    public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9)
+    public void doRenderLiving(EntityLiving entity, double x, double d0, double z, float entityYaw, float partialTicks)
     {
-        this.renderPlayer((EntityPlayer)par1EntityLiving, par2, par4, par6, par8, par9);
+        this.renderPlayer((EntityPlayer) entity, x, d0, z, entityYaw, partialTicks);
     }
 
     /**

@@ -51,10 +51,6 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer
             case 3:
                 if (par7Str != null && par7Str.length() > 0)
                 {
-                	/**
-             		* @edited 7/3/22
-             		* @purpose Modern (and functional) access to skins for skulls
-             		*/
                     String var9 = Cosmetics.getSkin(StringUtils.stripControlCodes(par7Str));
 
                     if (!skullRenderer.tileEntityRenderer.renderEngine.hasImageData(var9))

@@ -1,6 +1,7 @@
 package me.bigratenthusiast.bingusware;
 
-import me.bigratenthusiast.bingusware.command.CommandManager;
+import me.bigratenthusiast.bingusware.feature.CommandFeature;
+import me.bigratenthusiast.bingusware.feature.ZoomFeature;
 import me.bigratenthusiast.bingusware.module.Module;
 import me.bigratenthusiast.bingusware.module.modules.*;
 import net.minecraft.client.Minecraft;
@@ -10,15 +11,13 @@ import java.util.ArrayList;
 
 
 public class Client {
-    public static String name = "Bingusware", version = "my beloved", applicationId = "865980568286003200";
-    public static Module[] modules = new Module[] {
-            new Flight(), new Fullbright(), new TransRights(), new NoFall(), new Franky()
-    };
+    public static String name = "Bingusware", applicationId = "865980568286003200";
+    public static Module[] modules = new Module[] {new Flight(), new Fullbright(), new TransRights(), new NoFall(), new HideFeatures()};
     public static final HUD hud = new HUD();
 
     public static void onStart() {
-        System.err.println(name + " - " + version);
-        Display.setTitle(name);
+        System.err.println("Loading " + name + "...");
+        Display.setTitle("Minecraft (" + name + ")");
     }
 
     public static boolean callEvent(EventType type, Object... params) {
@@ -34,7 +33,8 @@ public class Client {
                 if (!module.toggled && module.percentSlidIn > 0) module.percentSlidIn-=hud.slideSpeed;
             }
         }
-        if (!CommandManager.onEvent(type, params)) return false;
+        ZoomFeature.onEvent(type, params);
+        if (!CommandFeature.onEvent(type, params)) return false;
         return true;
     }
 
