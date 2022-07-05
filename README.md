@@ -18,7 +18,7 @@ The bingusware client (minecraft 1.5.2 experience enhancer)
 
 ## Building
 - Run `recompile` and `reobfuscate`
-- Head into `/reobf/minecraft` and put zip everything in it into the root of a *zip* file
+- Head into `/reobf/minecraft` and put everything in it into the root of a *zip* file
 - Now you can patch the jar
 
 ## Patching
