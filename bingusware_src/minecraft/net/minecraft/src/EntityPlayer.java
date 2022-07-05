@@ -1645,8 +1645,8 @@ public abstract class EntityPlayer extends EntityLiving implements ICommandSende
              * @edited 7/4/22
              * @purpose make it easier to fly vertically
              */
-            this.addVelocity(0, Client.isModuleEnabled("Flight") ? (isJumping ? 1D : (isSneaking() ? -0.8D : 0)) : 0, 0);
             this.motionY = Client.isModuleEnabled("Flight")  ? 0 : (tempMotionY * 0.6D);
+            this.addVelocity(0, Client.isModuleEnabled("Flight") ? (isJumping ? 1D : (isSneaking() ? -0.8D : 0)) : 0, 0);
             this.jumpMovementFactor = tempJumpMovement;
         }
         else super.moveEntityWithHeading(par1, par2);
