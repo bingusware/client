@@ -9,24 +9,35 @@ import java.util.Base64;
 import java.util.UUID;
 
 public class Cosmetics {
-
-    // not a huge fan of being reliant on a third-party api, but it will do for the time being
+	// this code sucks please fix it
+	
     public static String getSkin(String username) {
-        return "https://crafatar.com/skins/" + getUUID(username);
+        try {
+            return getTextureData(username).split("\"url\" : \"")[1].split("\"")[0];
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static String getCape(String username) {
-        return "https://crafatar.com/capes/" + getUUID(username);
+        try {
+            return getTextureData(username).split("CAPE")[1].split("\"url\" : \"")[1].split("\"")[0];
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static boolean hasSmallArms(String username) {
         try {
-            String UUID = getUUID(username);
-            String decoded = getProfileData(UUID).split("textures\" : ")[1];
-            if (decoded.contains("SKIN")) {
-                return decoded.split("SKIN")[1].contains("slim");
-            } else {
-                return java.util.UUID.fromString(UUID).hashCode() % 2 == 1; // ...and alex is used for odd ones
+            try {
+                String textureData = getTextureData(username);
+                if (textureData.contains("\"model\" :")) {
+                    return getTextureData(username).contains("\"model\" : \"slim\"");
+                } else {
+                    return java.util.UUID.fromString(getUUID(username)).hashCode() % 2 == 1; // steve uuids are even
+                }
+            } catch (Exception e) {
+                return java.util.UUID.fromString(getUUID(username)).hashCode() % 2 == 1; // ...and alex is used for odd ones
             }
         } catch (Exception e) {
             System.err.println("Could not detect skin model type of player " + username);
@@ -34,6 +45,23 @@ public class Cosmetics {
             return false;
         }
     }
+
+    public static String getTextureData(String username) {
+        // ugh
+        try {
+            String UUID = getUUID(username);
+            String decoded = getProfileData(UUID).split("textures\" : ")[1];
+            if (decoded.contains("SKIN")) {
+                return decoded.split("SKIN")[1];
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println("Error in trying to get texture data of player " + username);
+            return null;
+        }
+    }
+
     public static String getProfileData(String UUID) {
         try {
             BufferedReader raw = new BufferedReader(new InputStreamReader(new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + UUID).openStream()));
@@ -48,7 +76,7 @@ public class Cosmetics {
     }
     public static String getUUID(String username) {
         // default UUID has a steve skin
-        String UUID = "9aa61371a012432dbe91d052ba497302";
+        String UUID = "1b11f093008d48ebbabc76fd75655872";
         // cool void skin
         // String UUID = "037a1727407c45fdab2919382764e896";
         try  {
